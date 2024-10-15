@@ -23,8 +23,8 @@ const ChatPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="flex-grow overflow-y-auto p-4 space-y-4">
+    <div className="flex flex-col-reverse h-full overflow-y-auto ">
+      <div className="flex-grow p-2 space-y-reverse4">
         {messages.map((message, index) => (
           <div
             key={index}
@@ -38,7 +38,7 @@ const ChatPage: React.FC = () => {
           </div>
         ))}
       </div>
-      <div className="p-4 border-t">
+      <div className="p-4 border-t flex-none">
         <div className="flex space-x-2">
           <Input
             placeholder="Type your message..."
