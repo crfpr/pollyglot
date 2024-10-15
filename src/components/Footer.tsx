@@ -1,11 +1,8 @@
 import React from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { Link, useLocation } from 'react-router-dom';
 
 interface FooterProps {
   className?: string;
-}
-}
 }
 
 export const Footer: React.FC<FooterProps> = ({ className }) => {
@@ -19,8 +16,6 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
           className={`flex-1 flex items-center justify-center ${location.pathname === '/' ? 'text-blue-600 font-semibold' : 'text-gray-600'}`}
           aria-label="Translate"
           tabIndex={0}
-          onClick={() => {}}
-          onKeyDown={() => {}}
         >
           Translate
         </Link>
@@ -29,8 +24,6 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
           className={`flex-1 flex items-center justify-center ${location.pathname === '/chat' ? 'text-blue-600 font-semibold' : 'text-gray-600'}`}
           aria-label="Chat"
           tabIndex={0}
-          onClick={() => {}}
-          onKeyDown={() => {}}
         >
           Chat
         </Link>
