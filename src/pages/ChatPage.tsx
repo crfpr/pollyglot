@@ -31,7 +31,7 @@ const ChatPage: React.FC = () => {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex-grow overflow-y-auto p-4 space-y-4 pb-20">
+      <div className="flex-grow overflow-y-auto p-4 space-y-4 pt-10 pb-20">
         {messages.map((message, index) => (
           <div
             key={index}
