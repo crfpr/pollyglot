@@ -23,20 +23,8 @@ const ChatPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col-reverse h-full overflow-y-auto">
-      <div className="flex-none p-4 border-t">
-        <div className="flex space-x-2">
-          <Input
-            placeholder="Type your message..."
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-            className="flex-grow"
-          />
-          <Button onClick={handleSendMessage}>Send</Button>
-        </div>
-      </div>
-      <div className="flex-grow p-4 flex flex-col-reverse space-y-4 space-y-reverse">
+    <div className="flex flex-col h-full">
+      <div className="flex-grow overflow-y-auto p-4 space-y-4">
         {messages.map((message, index) => (
           <div
             key={index}
@@ -49,6 +37,18 @@ const ChatPage: React.FC = () => {
             {message.text}
           </div>
         ))}
+      </div>
+      <div className="p-4 border-t">
+        <div className="flex space-x-2">
+          <Input
+            placeholder="Type your message..."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+            className="flex-grow"
+          />
+          <Button onClick={handleSendMessage}>Send</Button>
+        </div>
       </div>
     </div>
   );
