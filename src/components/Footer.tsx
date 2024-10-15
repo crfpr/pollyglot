@@ -37,3 +37,6 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
       </nav>
     </footer>
   );
+};
+
+export default Footer;
