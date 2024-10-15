@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -10,6 +10,13 @@ interface Message {
 const ChatPage: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(scrollToBottom, [messages]);
 
   const handleSendMessage = () => {
     if (input.trim()) {
@@ -24,7 +31,7 @@ const ChatPage: React.FC = () => {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex-grow overflow-y-auto p-4 space-y-4">
+      <div className="flex-grow overflow-y-auto p-4 space-y-4 pb-20">
         {messages.map((message, index) => (
           <div
             key={index}
@@ -37,8 +44,9 @@ const ChatPage: React.FC = () => {
             {message.text}
           </div>
         ))}
+        <div ref={messagesEndRef} />
       </div>
-      <div className="border-t bg-white p-4">
+      <div className="fixed bottom-16 left-0 right-0 bg-white border-t p-4">
         <div className="flex space-x-2 max-w-screen-lg mx-auto">
           <Input
             placeholder="Type your message..."
