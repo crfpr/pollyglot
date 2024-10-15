@@ -17,14 +17,14 @@ const TranslatePage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
-        <CardContent className="space-y-4 pt-6">
+    <div className="h-[calc(100vh-4rem)] pt-4 px-4">
+      <Card className="w-full max-w-md mx-auto h-full">
+        <CardContent className="flex flex-col h-full space-y-4 pt-6">
           <Textarea
             placeholder="Enter text to translate"
             value={text}
             onChange={(e) => setText(e.target.value)}
-            className="min-h-[100px]"
+            className="flex-grow resize-none"
           />
           <ToggleGroup type="single" value={language} onValueChange={(value) => setLanguage(value)} className="justify-center">
             <ToggleGroupItem value="French">French</ToggleGroupItem>
@@ -36,7 +36,7 @@ const TranslatePage: React.FC = () => {
             placeholder="Translated text will appear here"
             value={translatedText}
             readOnly
-            className="min-h-[100px]"
+            className="flex-grow resize-none"
           />
         </CardContent>
       </Card>
