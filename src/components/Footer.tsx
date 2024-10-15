@@ -9,7 +9,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
   const location = useLocation();
 
   return (
-    <footer className={`bg-white border-t border-gray-200 h-16 flex ${className}`}>
+    <footer className={`fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 h-16 flex ${className}`}>
       <Link
         to="/"
         className={`flex-1 flex items-center justify-center ${location.pathname === '/' ? 'text-blue-600 font-semibold' : 'text-gray-600'}`}
