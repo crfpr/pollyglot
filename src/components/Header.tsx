@@ -7,7 +7,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ className }) => {
   return (
     <header className={`bg-white-600 text-slate-900 p-4 h-16 ${className}`}>
-      <h1 className="text-xl font-bold text-center">PollyGlot - perfect translation every time</h1>
+      <h1 className="text-xl font-bold text-center">PollyGlot</h1>
     </header>
   );
 };
