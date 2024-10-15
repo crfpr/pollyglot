@@ -1,8 +1,12 @@
 import React from 'react';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  className?: string;
+}
+
+const Header: React.FC<HeaderProps> = ({ className }) => {
   return (
-    <header className="bg-blue-600 text-white p-4 sticky top-0 z-10">
+    <header className={`bg-white-600 text-slate-900 p-4 h-16 ${className}`}>
       <h1 className="text-xl font-bold text-center">PollyGlot - perfect translation every time</h1>
     </header>
   );

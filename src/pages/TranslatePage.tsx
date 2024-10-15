@@ -1,43 +1,57 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { getTranslation } from '@/services/openai';
 
 const TranslatePage: React.FC = () => {
   const [text, setText] = useState('');
   const [translatedText, setTranslatedText] = useState('');
   const [language, setLanguage] = useState('French');
+  const [isLoading, setIsLoading] = useState(false);
+  const [translation, setTranslation] = useState('');
 
-  const handleTranslate = () => {
-    // TODO: Implement translation logic using OpenAI API
-    console.log(`Translating "${text}" to ${language}`);
-    // For now, we'll just set a placeholder translated text
-    setTranslatedText(`This is a placeholder translation to ${language}`);
+  const handleTranslate = async () => {
+    setIsLoading(true);
+    try {
+      const result = await getTranslation(text, language);
+      setTranslatedText(result);
+      setTranslation(result);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <div className="flex flex-col h-full p-4">
-      <Textarea
-        placeholder="Enter text to translate"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        className="flex-grow resize-none mb-4"
-      />
-      <div className="flex flex-col items-center justify-center my-4">
-        <ToggleGroup type="single" value={language} onValueChange={(value) => setLanguage(value)} className="justify-center mb-4">
-          <ToggleGroupItem value="French">French</ToggleGroupItem>
-          <ToggleGroupItem value="Norwegian">Norwegian</ToggleGroupItem>
-          <ToggleGroupItem value="Japanese">Japanese</ToggleGroupItem>
+    <Card className="w-full">
+      <CardHeader>
+        <CardTitle>Translate</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <Input
+          placeholder="Enter text to translate"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+        />
+        <ToggleGroup type="single" value={language} onValueChange={(value) => setLanguage(value)} className="flex flex-wrap justify-center">
+          <ToggleGroupItem value="French" className="flex-grow">French</ToggleGroupItem>
+          <ToggleGroupItem value="Norwegian" className="flex-grow">Norwegian</ToggleGroupItem>
+          <ToggleGroupItem value="Japanese" className="flex-grow">Japanese</ToggleGroupItem>
         </ToggleGroup>
-        <Button className="w-full max-w-xs" onClick={handleTranslate}>Translate</Button>
-      </div>
-      <Textarea
-        placeholder="Translated text will appear here"
-        value={translatedText}
-        readOnly
-        className="flex-grow resize-none"
-      />
-    </div>
+        <Button className="w-full" onClick={handleTranslate} disabled={isLoading}>
+          {isLoading ? 'Translating...' : 'Translate'}
+        </Button>
+        {translation && (
+          <div className="mt-4">
+            <h3 className="font-semibold">Translation:</h3>
+            <p className="break-words">{translation}</p>
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 };
 
