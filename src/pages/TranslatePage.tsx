@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { getTranslation } from '@/services/openai';
+import { getTranslation } from '../services/openai';
 
 const TranslatePage: React.FC = () => {
   const [text, setText] = useState('');
