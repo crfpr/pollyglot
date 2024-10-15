@@ -17,7 +17,7 @@ const TranslatePage: React.FC = () => {
   };
 
   return (
-    <div className="h-[calc(100vh-4rem)] flex items-start justify-center p-4">
+    <div className="flex-1 flex items-center justify-center p-4">
       <Card className="w-full max-w-md h-full flex flex-col">
         <CardContent className="flex flex-col h-full space-y-4 pt-6">
           <Textarea

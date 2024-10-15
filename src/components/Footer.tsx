@@ -5,7 +5,7 @@ const Footer: React.FC = () => {
   const location = useLocation();
 
   return (
-    <footer className="bg-white border-t border-gray-200 fixed bottom-0 w-full">
+    <footer className="bg-white border-t border-gray-200 sticky bottom-0 w-full">
       <nav className="flex justify-around">
         <Link
           to="/"
