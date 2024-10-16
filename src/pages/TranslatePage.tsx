@@ -1,42 +1,40 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { getTranslation } from '../services/openai';
+import { getTranslation } from '@/services/openai';
 
 const TranslatePage: React.FC = () => {
   const [text, setText] = useState('');
-  const [translatedText, setTranslatedText] = useState('');
   const [language, setLanguage] = useState('French');
-  const [isLoading, setIsLoading] = useState(false);
   const [translation, setTranslation] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleTranslate = async () => {
-    setIsLoading(true);
-    try {
-      const result = await getTranslation(text, language);
-      setTranslatedText(result);
-      setTranslation(result);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
+    if (text.trim() && !isLoading) {
+      setIsLoading(true);
+      try {
+        const result = await getTranslation(text, language);
+        setTranslation(result);
+      } catch (error) {
+        console.error('Translation error:', error);
+        setTranslation('An error occurred during translation.');
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle>Translate</CardTitle>
-      </CardHeader>
+    <Card className="w-full max-w-md mx-auto mt-10">
       <CardContent className="space-y-4">
         <Input
           placeholder="Enter text to translate"
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
-        <ToggleGroup type="single" value={language} onValueChange={(value) => setLanguage(value)} className="flex flex-wrap justify-center">
+        <ToggleGroup type="single" value={language} onValueChange={setLanguage}>
           <ToggleGroupItem value="French" className="flex-grow">French</ToggleGroupItem>
           <ToggleGroupItem value="Norwegian" className="flex-grow">Norwegian</ToggleGroupItem>
           <ToggleGroupItem value="Japanese" className="flex-grow">Japanese</ToggleGroupItem>
@@ -53,6 +51,6 @@ const TranslatePage: React.FC = () => {
       </CardContent>
     </Card>
   );
-};
+}
 
 export default TranslatePage;
