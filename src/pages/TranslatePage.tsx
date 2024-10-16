@@ -19,7 +19,7 @@ const TranslatePage: React.FC = () => {
         setTranslation(result);
       } catch (error) {
         console.error('Translation error:', error);
-        setTranslation('An error occurred during translation.');
+        setTranslation('An error occurred during translation. Please try again later.');
       } finally {
         setIsLoading(false);
       }
