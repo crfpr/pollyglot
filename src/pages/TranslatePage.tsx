@@ -4,12 +4,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { getTranslation } from '@/services/openai';
+import { useToast } from "@/components/ui/use-toast";
 
 const TranslatePage: React.FC = () => {
   const [text, setText] = useState('');
   const [language, setLanguage] = useState('French');
   const [translation, setTranslation] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
   const handleTranslate = async () => {
     if (text.trim() && !isLoading) {
@@ -19,7 +21,12 @@ const TranslatePage: React.FC = () => {
         setTranslation(result);
       } catch (error) {
         console.error('Translation error:', error);
-        setTranslation('An error occurred during translation. Please try again later.');
+        toast({
+          title: "Translation Error",
+          description: "An error occurred during translation. Please try again later.",
+          variant: "destructive",
+        });
+        setTranslation('');
       } finally {
         setIsLoading(false);
       }

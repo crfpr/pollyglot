@@ -5,10 +5,6 @@ const openai = new OpenAI({
   dangerouslyAllowBrowser: true
 });
 
-export const getChatCompletion = async (messages: Array<{ role: string, content: string }>) => {
-  // Implementation here
-};
-
 export const getTranslation = async (text: string, targetLanguage: string) => {
   try {
     const completion = await openai.chat.completions.create({
