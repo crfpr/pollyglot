@@ -19,6 +19,7 @@ const App = () => (
             <Route path="/" element={<Layout />}>
               <Route index element={<TranslatePage />} />
               <Route path="chat" element={<ChatPage />} />
+              <Route path="*" element={<div>Page not found</div>} />
             </Route>
           </Routes>
         </BrowserRouter>
