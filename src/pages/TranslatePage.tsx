@@ -48,7 +48,7 @@ const TranslatePage: React.FC = () => {
 
   return (
     <Card className="w-full max-w-md mx-auto mt-10">
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 p-4">
         <Input
           placeholder="Enter text to translate"
           value={text}
