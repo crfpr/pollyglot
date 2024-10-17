@@ -55,7 +55,7 @@ const TranslatePage: React.FC = () => {
           onChange={(e) => setText(e.target.value)}
         />
         <ToggleGroup type="single" value={language} onValueChange={setLanguage}>
-          <ToggleGroupItem value="French" className="flex-grow">French</ToggleGroupItem>
+          <ToggleGroupItem value="Klingon" className="flex-grow">Klingon</ToggleGroupItem>
           <ToggleGroupItem value="Norwegian" className="flex-grow">Norwegian</ToggleGroupItem>
           <ToggleGroupItem value="Japanese" className="flex-grow">Japanese</ToggleGroupItem>
         </ToggleGroup>
