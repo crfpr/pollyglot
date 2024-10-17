@@ -8,16 +8,10 @@ import { getTranslation } from '@/services/openai';
 const TranslatePage: React.FC = () => {
   console.log("Rendering TranslatePage");
   const [text, setText] = useState('');
-  const [language, setLanguage] = useState('French');
+  const [language, setLanguage] = useState('Klingon');
   const [translation, setTranslation] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!import.meta.env.VITE_OPENAI_API_KEY) {
-      setError("OpenAI API key is missing. Please check your environment variables.");
-    }
-  }, []);
 
   const handleTranslate = async () => {
     if (text.trim() && !isLoading && !error) {
