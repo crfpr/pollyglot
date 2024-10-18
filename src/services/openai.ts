@@ -1,4 +1,4 @@
-const WORKER_URL = 'https://openaiapiworker.christopher-pearsell-ross.workers.dev/'; // Replace with your actual Worker URL
+const WORKER_URL = 'https://openaiapiworker.christopher-pearsell-ross.workers.dev/';
 
 export const getTranslation = async (text: string, targetLanguage: string) => {
   try {
@@ -19,6 +19,7 @@ export const getTranslation = async (text: string, targetLanguage: string) => {
     }
 
     const result = await response.json();
+    console.log(result);
     return result.content;
 
   } catch (error) {
