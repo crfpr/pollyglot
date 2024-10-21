@@ -1,29 +1,26 @@
 const WORKER_URL = 'https://openaiapiworker.christopher-pearsell-ross.workers.dev/';
 
-export const getTranslation = async (text: string, targetLanguage: string) => {
+export async function getTranslation(userMessage: string, targetLanguage: string) {
   try {
     const response = await fetch(WORKER_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        userMessage: text,
-        targetLanguage,
-      }),
+      body: JSON.stringify({ userMessage, targetLanguage, requestType: 'translate' }),
+      credentials: 'include',  // Include credentials
     });
 
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || 'Unknown error occurred');
+      const errorText = await response.text();
+      console.error('Error response:', errorText);
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const result = await response.json();
-    console.log(result);
-    return result.content;
-
+    const data = await response.json();
+    return data.content;
   } catch (error) {
     console.error('Error in getTranslation:', error);
     throw new Error('Translation failed. Please try again later.');
   }
-};
+}

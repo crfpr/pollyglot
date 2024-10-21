@@ -51,7 +51,7 @@ const TranslatePage: React.FC = () => {
           <ToggleGroupItem value="Japanese" className="flex-grow">Japanese</ToggleGroupItem>
         </ToggleGroup>
         {/* Translation button */}
-        <Button className="w-full" onClick={handleTranslate} disabled={isLoading}>
+        <Button className="w-full" onClick={handleTranslate} disabled={isLoading || !text.trim()}>
           {isLoading ? 'Translating...' : 'Translate'}
         </Button>
         {/* Error display */}
