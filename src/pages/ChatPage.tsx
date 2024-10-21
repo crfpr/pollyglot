@@ -1,15 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { getChatResponse } from '@/services/openai';
 
 interface Message {
-  text: string;
-  isUser: boolean;
+  role: 'system' | 'user' | 'assistant';
+  content: string;
 }
 
 const ChatPage: React.FC = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState('');
+  const [messages, setMessages] = useState<Message[]>([
+    { role: 'system', content: "You are a polyglot quiz host. Respond to the user's message in a random language (e.g. Korean, Spanish, French, Elvish, etc.). Keep the response short and concise. If the user guesses the language, respond in English and congratulate them. Then, start responding in a new random language." }
+  ]);
+  const [input, setInput] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -18,30 +22,41 @@ const ChatPage: React.FC = () => {
 
   useEffect(scrollToBottom, [messages]);
 
-  const handleSendMessage = () => {
-    if (input.trim()) {
-      setMessages([...messages, { text: input, isUser: true }]);
+  const handleSendMessage = async () => {
+    if (input.trim() && !isLoading) {
+      setIsLoading(true);
+      const userMessage = input.trim();
+      const newUserMessage: Message = { role: 'user', content: userMessage };
+      setMessages(prev => [...prev, newUserMessage]);
       setInput('');
-      // TODO: Implement chat logic using OpenAI API
-      setTimeout(() => {
-        setMessages(prev => [...prev, { text: "This is a placeholder response.", isUser: false }]);
-      }, 1000);
+      try {
+        const updatedMessages = [...messages, newUserMessage];
+        const response = await getChatResponse(updatedMessages);
+        const assistantMessage: Message = { role: 'assistant', content: response };
+        setMessages(prev => [...prev, assistantMessage]);
+      } catch (error) {
+        console.error('Chat error:', error);
+        const errorMessage: Message = { role: 'assistant', content: "Sorry, an error occurred. Please try again." };
+        setMessages(prev => [...prev, errorMessage]);
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
   return (
     <div className="flex flex-col h-full pt-16">
       <div className="flex-grow overflow-y-auto p-4 space-y-4 pt-10 pb-20">
-        {messages.map((message, index) => (
+        {messages.slice(1).map((message, index) => (
           <div
             key={index}
             className={`p-2 rounded-lg ${
-              message.isUser
+              message.role === 'user'
                 ? 'bg-blue-500 text-white ml-auto'
                 : 'bg-green-500 text-white mr-auto'
             } max-w-[80%]`}
           >
-            {message.text}
+            {message.content}
           </div>
         ))}
         <div ref={messagesEndRef} />
@@ -55,7 +70,9 @@ const ChatPage: React.FC = () => {
             onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
             className="flex-grow"
           />
-          <Button onClick={handleSendMessage}>Send</Button>
+          <Button onClick={handleSendMessage} disabled={isLoading}>
+            {isLoading ? 'Sending...' : 'Send'}
+          </Button>
         </div>
       </div>
     </div>
