@@ -8,7 +8,7 @@ export async function getTranslation(userMessage: string, targetLanguage: string
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ userMessage, targetLanguage, requestType: 'translate' }),
-      credentials: 'include',  // Include credentials
+      credentials: 'same-origin',  // Include credentials
     });
 
     if (!response.ok) {
