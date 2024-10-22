@@ -10,7 +10,7 @@ interface Message {
 
 const ChatPage: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'system', content: "You are a polyglot quiz host. Respond to the user's message in a random language (e.g. Korean, Spanish, French, Elvish, etc.). Keep the response short and concise. If the user guesses the language, respond in English and congratulate them. Then, start responding in a new random language." }
+    { role: 'system', content: "You are a polyglot quiz host. Respond to the user's message in a random language (e.g. Korean, Spanish, French, Elvish, etc.). Keep the response short and concise. If the user guesses the language, respond in English and congratulate them before continuing in a new random language." }
   ]);
   const [input, setInput] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
